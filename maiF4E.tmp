@@ -1,0 +1,132 @@
+[gd_scene load_steps=7 format=3 uid="uid://c3wo5uogb3xuw"]
+
+[ext_resource type="Script" path="res://main_scene.gd" id="1_laivv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lueol"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vt4cy"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k3drm"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="Theme" id="Theme_tucu3"]
+Button/constants/align_to_largest_stylebox = 0
+Button/constants/h_separation = 4
+Button/constants/icon_max_width = 0
+Button/constants/outline_size = 0
+Button/styles/focus = SubResource("StyleBoxFlat_lueol")
+Button/styles/hover = SubResource("StyleBoxFlat_vt4cy")
+Button/styles/normal = SubResource("StyleBoxFlat_lueol")
+Button/styles/pressed = SubResource("StyleBoxFlat_k3drm")
+
+[sub_resource type="GDScript" id="GDScript_2ymy2"]
+script/source = "extends Button
+
+# Define the sequence of colors
+var colors = [
+    Color(1, 1, 1),  # White
+    Color(0, 0, 0),  # Black
+    Color(1, 0, 0),  # Red
+    Color(1, 0.6, 0),  # Orange
+    Color(1, 1, 0),  # Yellow
+    Color(0, 1, 0),  # Green
+    Color(0, 0, 1)   # Blue
+]
+
+var current_color_index = 0
+
+func _ready():
+    update_button_color()
+    connect(\"pressed\", Callable(self, \"_on_button_pressed\"))
+
+func _on_button_pressed():
+    current_color_index = (current_color_index + 1) % colors.size()
+    update_button_color()
+
+func update_button_color():
+    modulate = colors[current_color_index]
+"
+
+[node name="MainScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_laivv")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.316344, 0.408779, 0.424515, 1)
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -755.0
+offset_top = -271.0
+offset_right = -77.0
+offset_bottom = 271.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 5
+
+[node name="Button" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(135.6, 108.4)
+layout_mode = 2
+theme = SubResource("Theme_tucu3")
+script = SubResource("GDScript_2ymy2")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 209.0
+offset_bottom = 123.0
+text = "Labels:
+
+White
+Black
+Red
+Orange
+Yellow
+Green
+Blue"
